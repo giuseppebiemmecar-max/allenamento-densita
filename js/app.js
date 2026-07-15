@@ -191,7 +191,7 @@
 
   // ---------- Navigation ----------
 
-  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings', 'freemode'];
+  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings', 'freemode', 'timer'];
   const NAV_VIEWS = ['dashboard', 'week', 'exercises', 'history', 'settings'];
 
   function showView(name) {
@@ -208,6 +208,7 @@
 
   function goDashboard() { renderDashboard(); showView('dashboard'); }
   function goFreemode() { $('#freemode-form').reset(); showView('freemode'); }
+  function goTimer() { $('#timer-form').reset(); showView('timer'); }
   function goWeek() { renderWeek(); showView('week'); }
   function goExercises() { renderExercises(); showView('exercises'); }
   function goHistory() { renderHistory(); showView('history'); }
@@ -430,6 +431,7 @@
       phase: 'ready',
       restEndsAt: null,
       completedReps: 0,
+      targetReps: TARGET_REPS,
     };
     saveState();
     enterWorkoutView();
@@ -445,6 +447,23 @@
       phase: 'ready',
       restEndsAt: null,
       completedReps: 0,
+      targetReps: TARGET_REPS,
+    };
+    saveState();
+    enterWorkoutView();
+  }
+
+  function startCustomTimer(numSets, repsPerSet, restSeconds, label) {
+    const sets = Array(numSets).fill(repsPerSet);
+    state.activeSession = {
+      custom: { label: label.trim() },
+      sets,
+      restSeconds,
+      currentIndex: 0,
+      phase: 'ready',
+      restEndsAt: null,
+      completedReps: 0,
+      targetReps: numSets * repsPerSet,
     };
     saveState();
     enterWorkoutView();
@@ -459,6 +478,19 @@
     if (!(max > 0)) return;
     const label = $('#freemode-exercise').value;
     startFreemodeWorkout(max, label);
+  });
+
+  $('#btn-open-timer').addEventListener('click', goTimer);
+  $('#btn-timer-back').addEventListener('click', goDashboard);
+
+  $('#timer-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const numSets = Number($('#timer-sets').value);
+    const repsPerSet = Number($('#timer-reps').value);
+    const restSeconds = Number($('#timer-rest').value);
+    if (!(numSets > 0) || !(repsPerSet > 0) || !(restSeconds > 0)) return;
+    const label = $('#timer-exercise').value;
+    startCustomTimer(numSets, repsPerSet, restSeconds, label);
   });
 
   function enterWorkoutView() {
@@ -488,6 +520,10 @@
       muscleName = 'Modalità libera';
       exerciseName = s.freemode.label || 'Esercizio libero';
       exerciseTip = null;
+    } else if (s.custom) {
+      muscleName = 'Cronometro personalizzato';
+      exerciseName = s.custom.label || 'Esercizio libero';
+      exerciseTip = null;
     } else {
       const group = state.groups.find(g => g.id === s.groupId);
       if (!group) { state.activeSession = null; saveState(); goDashboard(); return; }
@@ -510,9 +546,10 @@
     const isLast = s.currentIndex === s.sets.length - 1;
     $('#workout-banner-last').classList.toggle('hidden', !isLast);
 
-    const pct = Math.min(100, Math.round((s.completedReps / TARGET_REPS) * 100));
+    const targetReps = s.targetReps || TARGET_REPS;
+    const pct = Math.min(100, Math.round((s.completedReps / targetReps) * 100));
     $('#workout-progress-fill').style.width = pct + '%';
-    $('#workout-progress-label').textContent = `${s.completedReps} / ${TARGET_REPS} ripetizioni`;
+    $('#workout-progress-label').textContent = `${s.completedReps} / ${targetReps} ripetizioni`;
 
     $('#workout-set-count').textContent = `Serie ${s.currentIndex + 1} / ${s.sets.length}`;
 
@@ -648,6 +685,9 @@
     if (s.freemode) {
       groupName = 'Modalità libera';
       exerciseName = s.freemode.label || 'Esercizio libero';
+    } else if (s.custom) {
+      groupName = 'Cronometro personalizzato';
+      exerciseName = s.custom.label || 'Esercizio libero';
     } else {
       const group = state.groups.find(g => g.id === s.groupId);
       groupName = group ? group.name : '—';

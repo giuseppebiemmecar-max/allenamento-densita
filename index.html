@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 
@@ -63,6 +63,17 @@
       <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
     </button>
 
+    <button type="button" id="btn-open-timer" class="freemode-card freemode-card-alt">
+      <div class="freemode-card-icon freemode-card-icon-alt">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <div class="freemode-card-text">
+        <div class="freemode-card-title">Cronometro personalizzato</div>
+        <div class="freemode-card-subtitle">Scegli tu serie, ripetizioni e pausa — nessuno schema, solo il timer</div>
+      </div>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+
     <div id="dashboard-cards" class="card-list"></div>
   </section>
 
@@ -89,6 +100,42 @@
         <input type="number" id="freemode-max" class="input" min="1" max="200" placeholder="es. 10" required>
       </label>
       <button type="submit" class="btn btn-primary btn-block btn-lg">Genera allenamento</button>
+    </form>
+  </section>
+
+  <!-- CUSTOM TIMER -->
+  <section id="view-timer" class="view">
+    <header class="workout-header">
+      <button type="button" id="btn-timer-back" class="icon-btn" aria-label="Torna indietro">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="workout-title">
+        <h2>Cronometro personalizzato</h2>
+        <p class="subtitle">Imposta serie, ripetizioni e pausa come preferisci</p>
+      </div>
+      <div class="workout-header-spacer"></div>
+    </header>
+
+    <form id="timer-form" class="stack">
+      <label class="field">
+        <span>Esercizio (opzionale)</span>
+        <input type="text" id="timer-exercise" class="input" placeholder="es. Squat a corpo libero">
+      </label>
+      <div class="group-row-body">
+        <label class="field">
+          <span>Numero di serie</span>
+          <input type="number" id="timer-sets" class="input" min="1" max="99" placeholder="es. 3" required>
+        </label>
+        <label class="field">
+          <span>Ripetizioni per serie</span>
+          <input type="number" id="timer-reps" class="input" min="1" max="200" placeholder="es. 15" required>
+        </label>
+      </div>
+      <label class="field">
+        <span>Pausa tra le serie (secondi)</span>
+        <input type="number" id="timer-rest" class="input" min="1" max="600" placeholder="es. 60" required>
+      </label>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Avvia cronometro</button>
     </form>
   </section>
 
@@ -242,6 +289,6 @@
   </div>
 </template>
 
-<script src="js/app.js?v=4"></script>
+<script src="js/app.js?v=5"></script>
 </body>
 </html>
