@@ -566,24 +566,46 @@
     }, 250);
   }
 
+  // iOS/Safari only allows starting audio inside a real user-gesture handler.
+  // We create one AudioContext on the first tap anywhere and reuse it later
+  // (from setInterval callbacks) so the rest-end beep can actually be heard.
+  let audioCtx = null;
+
+  function unlockAudio() {
+    if (!audioCtx) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      audioCtx = new Ctx();
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+  }
+  document.addEventListener('pointerdown', unlockAudio, { once: true });
+
   function notifyRestOver() {
     if (navigator.vibrate) navigator.vibrate([180, 60, 180]);
     playBeep();
   }
 
+  function playTone(startTime, freq, duration) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.3, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(startTime);
+    osc.stop(startTime + duration);
+  }
+
   function playBeep() {
     try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = 880;
-      gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.4);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.4);
+      unlockAudio();
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      playTone(now, 880, 0.18);
+      playTone(now + 0.22, 1175, 0.28);
     } catch (e) { /* audio not available */ }
   }
 
