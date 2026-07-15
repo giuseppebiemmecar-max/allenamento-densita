@@ -191,7 +191,7 @@
 
   // ---------- Navigation ----------
 
-  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings'];
+  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings', 'freemode'];
   const NAV_VIEWS = ['dashboard', 'week', 'exercises', 'history', 'settings'];
 
   function showView(name) {
@@ -207,6 +207,7 @@
   }
 
   function goDashboard() { renderDashboard(); showView('dashboard'); }
+  function goFreemode() { $('#freemode-form').reset(); showView('freemode'); }
   function goWeek() { renderWeek(); showView('week'); }
   function goExercises() { renderExercises(); showView('exercises'); }
   function goHistory() { renderHistory(); showView('history'); }
@@ -434,6 +435,32 @@
     enterWorkoutView();
   }
 
+  function startFreemodeWorkout(max, label) {
+    const plan = computePlan(max, DEFAULT_REST);
+    state.activeSession = {
+      freemode: { label: label.trim() },
+      sets: plan.sets,
+      restSeconds: plan.restSeconds,
+      currentIndex: 0,
+      phase: 'ready',
+      restEndsAt: null,
+      completedReps: 0,
+    };
+    saveState();
+    enterWorkoutView();
+  }
+
+  $('#btn-open-freemode').addEventListener('click', goFreemode);
+  $('#btn-freemode-back').addEventListener('click', goDashboard);
+
+  $('#freemode-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const max = Number($('#freemode-max').value);
+    if (!(max > 0)) return;
+    const label = $('#freemode-exercise').value;
+    startFreemodeWorkout(max, label);
+  });
+
   function enterWorkoutView() {
     if (!state.activeSession) { goDashboard(); return; }
     settleRestIfElapsed();
@@ -455,15 +482,26 @@
   function renderWorkout() {
     const s = state.activeSession;
     if (!s) return;
-    const group = state.groups.find(g => g.id === s.groupId);
-    if (!group) { state.activeSession = null; saveState(); goDashboard(); return; }
 
-    const exObj = exerciseObjFor(group);
-    $('#workout-muscle-name').textContent = group.name;
-    $('#workout-exercise-name').innerHTML = `${escapeHtml(exObj ? exObj.name : 'Esercizio da definire')} ${tutorialLinkHtml(exObj && exObj.name)}`;
+    let muscleName, exerciseName, exerciseTip;
+    if (s.freemode) {
+      muscleName = 'Modalità libera';
+      exerciseName = s.freemode.label || 'Esercizio libero';
+      exerciseTip = null;
+    } else {
+      const group = state.groups.find(g => g.id === s.groupId);
+      if (!group) { state.activeSession = null; saveState(); goDashboard(); return; }
+      const exObj = exerciseObjFor(group);
+      muscleName = group.name;
+      exerciseName = exObj ? exObj.name : 'Esercizio da definire';
+      exerciseTip = exObj ? exObj.tip : null;
+    }
+
+    $('#workout-muscle-name').textContent = muscleName;
+    $('#workout-exercise-name').innerHTML = `${escapeHtml(exerciseName)} ${tutorialLinkHtml(exerciseName)}`;
     const tipEl = $('#workout-exercise-tip');
-    if (exObj && exObj.tip) {
-      tipEl.textContent = exObj.tip;
+    if (exerciseTip) {
+      tipEl.textContent = exerciseTip;
       tipEl.classList.remove('hidden');
     } else {
       tipEl.classList.add('hidden');
@@ -584,12 +622,20 @@
 
   function finishWorkout() {
     const s = state.activeSession;
-    const group = state.groups.find(g => g.id === s.groupId);
+    let groupName, exerciseName;
+    if (s.freemode) {
+      groupName = 'Modalità libera';
+      exerciseName = s.freemode.label || 'Esercizio libero';
+    } else {
+      const group = state.groups.find(g => g.id === s.groupId);
+      groupName = group ? group.name : '—';
+      exerciseName = group ? exerciseNameFor(group) : '—';
+    }
     state.history.unshift({
       id: uid(),
       date: new Date().toISOString(),
-      groupName: group ? group.name : '—',
-      exerciseName: group ? exerciseNameFor(group) : '—',
+      groupName,
+      exerciseName,
       totalSets: s.sets.length,
       totalReps: s.completedReps,
     });

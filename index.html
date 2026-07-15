@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 
@@ -51,7 +51,45 @@
       <p class="subtitle">Metodo densità: 100 ripetizioni per gruppo muscolare, serie da massimale ÷ 2.</p>
     </header>
     <div id="today-banner" class="today-banner"></div>
+
+    <button type="button" id="btn-open-freemode" class="freemode-card">
+      <div class="freemode-card-icon">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-8z"/></svg>
+      </div>
+      <div class="freemode-card-text">
+        <div class="freemode-card-title">Modalità libera</div>
+        <div class="freemode-card-subtitle">Inserisci un massimale al volo e parti subito, senza salvarlo nel piano</div>
+      </div>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+
     <div id="dashboard-cards" class="card-list"></div>
+  </section>
+
+  <!-- FREE MODE -->
+  <section id="view-freemode" class="view">
+    <header class="workout-header">
+      <button type="button" id="btn-freemode-back" class="icon-btn" aria-label="Torna indietro">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="workout-title">
+        <h2>Modalità libera</h2>
+        <p class="subtitle">Genera un timer al volo per arrivare a 100 ripetizioni</p>
+      </div>
+      <div class="workout-header-spacer"></div>
+    </header>
+
+    <form id="freemode-form" class="stack">
+      <label class="field">
+        <span>Esercizio (opzionale)</span>
+        <input type="text" id="freemode-exercise" class="input" placeholder="es. Curl con manubri">
+      </label>
+      <label class="field">
+        <span>Massimale ripetizioni</span>
+        <input type="number" id="freemode-max" class="input" min="1" max="200" placeholder="es. 10" required>
+      </label>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Genera allenamento</button>
+    </form>
   </section>
 
   <!-- WEEKLY SCHEDULE -->
@@ -204,6 +242,6 @@
   </div>
 </template>
 
-<script src="js/app.js"></script>
+<script src="js/app.js?v=2"></script>
 </body>
 </html>
