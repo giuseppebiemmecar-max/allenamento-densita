@@ -23,65 +23,65 @@
 
   const DEFAULT_EXERCISES = {
     biceps: [
-      { name: 'Curl con bilanciere', tip: 'In piedi, gomiti fermi ai fianchi: solleva il bilanciere piegando gli avambracci senza slanciare la schiena.' },
-      { name: 'Curl manubri alternato', tip: 'In piedi o seduto, solleva un manubrio alla volta ruotando il polso verso la spalla.' },
-      { name: 'Curl a martello', tip: 'Impugnatura neutra (palmi verso il corpo): solleva i manubri senza ruotare il polso.' },
-      { name: 'Curl concentrato', tip: 'Seduto, gomito appoggiato all\'interno della coscia: solleva il manubrio isolando il bicipite.' },
-      { name: 'Curl inverso', tip: 'Impugnatura prona (palmi verso il basso) sul bilanciere: utile anche per gli avambracci.' },
+      { name: 'Curl con bilanciere', tip: 'In piedi, gomiti fermi ai fianchi: solleva il bilanciere piegando gli avambracci senza slanciare la schiena.', mw: 'barbell-curl' },
+      { name: 'Curl manubri alternato', tip: 'In piedi o seduto, solleva un manubrio alla volta ruotando il polso verso la spalla.', mw: 'dumbbell-curl' },
+      { name: 'Curl a martello', tip: 'Impugnatura neutra (palmi verso il corpo): solleva i manubri senza ruotare il polso.', mw: 'dumbbell-hammer-curl' },
+      { name: 'Curl concentrato', tip: 'Seduto, gomito appoggiato all\'interno della coscia: solleva il manubrio isolando il bicipite.', mw: 'dumbbell-concentration-curl' },
+      { name: 'Curl inverso', tip: 'Impugnatura prona (palmi verso il basso) sul bilanciere: utile anche per gli avambracci.', mw: 'dumbbell-reverse-curl' },
     ],
     triceps: [
-      { name: 'French press', tip: 'Sdraiato o in piedi, bilanciere/manubrio dietro la testa: estendi i gomiti mantenendoli fermi.' },
-      { name: 'Push down ai cavi', tip: 'Ai cavi alti, gomiti fissi ai fianchi: spingi la barra verso il basso fino a estendere le braccia.' },
-      { name: 'Dip su panca', tip: 'Mani su una panca dietro di te: piega i gomiti abbassando il bacino, poi spingi per risalire.' },
-      { name: 'Estensioni sopra la testa', tip: 'Manubrio sopra la testa a due mani: piega i gomiti dietro la nuca e poi estendi.' },
-      { name: 'Kickback ai cavi', tip: 'Busto inclinato in avanti, gomito fermo: estendi il braccio all\'indietro.' },
+      { name: 'French press', tip: 'Sdraiato o in piedi, bilanciere/manubrio dietro la testa: estendi i gomiti mantenendoli fermi.', mw: 'barbell-laying-triceps-extensions' },
+      { name: 'Push down ai cavi', tip: 'Ai cavi alti, gomiti fissi ai fianchi: spingi la barra verso il basso fino a estendere le braccia.', mw: 'cable-rope-pushdown' },
+      { name: 'Dip su panca', tip: 'Mani su una panca dietro di te: piega i gomiti abbassando il bacino, poi spingi per risalire.', mw: 'bench-dips' },
+      { name: 'Estensioni sopra la testa', tip: 'Manubrio sopra la testa a due mani: piega i gomiti dietro la nuca e poi estendi.', mw: 'dumbbell-overhead-tricep-extension' },
+      { name: 'Kickback ai cavi', tip: 'Busto inclinato in avanti, gomito fermo: estendi il braccio all\'indietro.', mw: 'cable-tricep-kickback' },
     ],
     back: [
-      { name: 'Trazioni alla sbarra', tip: 'Presa prona più larga delle spalle: tira il corpo verso l\'alto fino al mento sopra la sbarra.' },
-      { name: 'Lat machine avanti', tip: 'Presa larga: tira la barra verso il petto portando indietro i gomiti.' },
-      { name: 'Rematore con bilanciere', tip: 'Busto inclinato in avanti: tira il bilanciere verso l\'addome mantenendo la schiena dritta.' },
-      { name: 'Rematore manubrio', tip: 'Un ginocchio e una mano appoggiati alla panca: tira il manubrio verso il fianco.' },
-      { name: 'Pulley basso', tip: 'Seduto: tira la maniglia verso l\'addome mantenendo il busto eretto.' },
+      { name: 'Trazioni alla sbarra', tip: 'Presa prona più larga delle spalle: tira il corpo verso l\'alto fino al mento sopra la sbarra.', mw: 'pull-ups' },
+      { name: 'Lat machine avanti', tip: 'Presa larga: tira la barra verso il petto portando indietro i gomiti.', mw: 'machine-pulldown' },
+      { name: 'Rematore con bilanciere', tip: 'Busto inclinato in avanti: tira il bilanciere verso l\'addome mantenendo la schiena dritta.', mw: 'barbell-bent-over-row' },
+      { name: 'Rematore manubrio', tip: 'Un ginocchio e una mano appoggiati alla panca: tira il manubrio verso il fianco.', mw: 'dumbbell-row-unilateral' },
+      { name: 'Pulley basso', tip: 'Seduto: tira la maniglia verso l\'addome mantenendo il busto eretto.', mw: 'machine-seated-cable-row' },
     ],
     shoulders: [
-      { name: 'Military press', tip: 'In piedi o seduto: spingi il bilanciere/manubri sopra la testa partendo dalle spalle.' },
-      { name: 'Alzate laterali', tip: 'Manubri ai fianchi: solleva le braccia lateralmente fino all\'altezza delle spalle.' },
-      { name: 'Alzate frontali', tip: 'Manubri davanti alle cosce: solleva le braccia in avanti fino all\'altezza delle spalle.' },
-      { name: 'Alzate posteriori', tip: 'Busto inclinato in avanti: solleva i manubri lateralmente per colpire i deltoidi posteriori.' },
-      { name: 'Arnold press', tip: 'Parti con i palmi verso di te e ruota i polsi mentre spingi i manubri verso l\'alto.' },
+      { name: 'Military press', tip: 'In piedi o seduto: spingi il bilanciere/manubri sopra la testa partendo dalle spalle.', mw: 'barbell-overhead-press' },
+      { name: 'Alzate laterali', tip: 'Manubri ai fianchi: solleva le braccia lateralmente fino all\'altezza delle spalle.', mw: 'dumbbell-lateral-raise' },
+      { name: 'Alzate frontali', tip: 'Manubri davanti alle cosce: solleva le braccia in avanti fino all\'altezza delle spalle.', mw: 'dumbbell-front-raise' },
+      { name: 'Alzate posteriori', tip: 'Busto inclinato in avanti: solleva i manubri lateralmente per colpire i deltoidi posteriori.', mw: 'dumbbell-seated-rear-delt-fly' },
+      { name: 'Arnold press', tip: 'Parti con i palmi verso di te e ruota i polsi mentre spingi i manubri verso l\'alto.', mw: 'dumbbell-arnold-press' },
     ],
     chest: [
-      { name: 'Panca piana', tip: 'Sdraiato su panca: abbassa il bilanciere al petto e spingi verso l\'alto controllando il movimento.' },
-      { name: 'Panca inclinata', tip: 'Come la panca piana ma su piano inclinato, per la parte alta del petto.' },
-      { name: 'Croci con manubri', tip: 'Sdraiato, braccia leggermente piegate: apri e chiudi i manubri come in un abbraccio.' },
-      { name: 'Dip per pettorali', tip: 'Alle parallele, busto inclinato in avanti: scendi piegando i gomiti e risali.' },
-      { name: 'Push-up', tip: 'Mani leggermente più larghe delle spalle: scendi mantenendo il corpo in linea e risali.' },
+      { name: 'Panca piana', tip: 'Sdraiato su panca: abbassa il bilanciere al petto e spingi verso l\'alto controllando il movimento.', mw: 'barbell-bench-press' },
+      { name: 'Panca inclinata', tip: 'Come la panca piana ma su piano inclinato, per la parte alta del petto.', mw: 'barbell-incline-bench-press' },
+      { name: 'Croci con manubri', tip: 'Sdraiato, braccia leggermente piegate: apri e chiudi i manubri come in un abbraccio.', mw: 'dumbbell-chest-fly' },
+      { name: 'Dip per pettorali', tip: 'Alle parallele, busto inclinato in avanti: scendi piegando i gomiti e risali.', mw: 'box-dips' },
+      { name: 'Push-up', tip: 'Mani leggermente più larghe delle spalle: scendi mantenendo il corpo in linea e risali.', mw: 'push-up' },
     ],
     quads: [
-      { name: 'Squat', tip: 'Piedi larghezza spalle: scendi piegando le ginocchia mantenendo la schiena dritta, poi risali.' },
-      { name: 'Leg press', tip: 'Seduto sulla macchina: spingi la pedana con i piedi estendendo le ginocchia senza bloccarle.' },
-      { name: 'Affondi', tip: 'Fai un passo avanti e scendi finché entrambe le ginocchia sono piegate a 90°, poi torna su.' },
-      { name: 'Leg extension', tip: 'Seduto sulla macchina: estendi le ginocchia sollevando il carico con la parte anteriore della coscia.' },
-      { name: 'Squat bulgaro', tip: 'Piede posteriore appoggiato su una panca: scendi con la gamba anteriore piegando il ginocchio.' },
+      { name: 'Squat', tip: 'Piedi larghezza spalle: scendi piegando le ginocchia mantenendo la schiena dritta, poi risali.', mw: 'barbell-squat' },
+      { name: 'Leg press', tip: 'Seduto sulla macchina: spingi la pedana con i piedi estendendo le ginocchia senza bloccarle.', mw: 'machine-leg-press' },
+      { name: 'Affondi', tip: 'Fai un passo avanti e scendi finché entrambe le ginocchia sono piegate a 90°, poi torna su.', mw: 'forward-lunges' },
+      { name: 'Leg extension', tip: 'Seduto sulla macchina: estendi le ginocchia sollevando il carico con la parte anteriore della coscia.', mw: 'machine-leg-extension' },
+      { name: 'Squat bulgaro', tip: 'Piede posteriore appoggiato su una panca: scendi con la gamba anteriore piegando il ginocchio.', mw: 'dumbbell-bulgarian-split-squat' },
     ],
     hamstrings: [
-      { name: 'Stacco rumeno', tip: 'Gambe quasi tese: fai scorrere il bilanciere lungo le gambe piegando l\'anca, schiena dritta.' },
-      { name: 'Leg curl', tip: 'Sdraiato o seduto sulla macchina: piega le ginocchia portando i talloni verso i glutei.' },
-      { name: 'Hip thrust', tip: 'Schiena appoggiata a una panca: spingi il bacino verso l\'alto contraendo i glutei.' },
-      { name: 'Good morning', tip: 'Bilanciere sulle spalle: piega il busto in avanti mantenendo la schiena dritta e le ginocchia morbide.' },
-      { name: 'Ponte glutei', tip: 'Sdraiato a terra, ginocchia piegate: solleva il bacino contraendo i glutei.' },
+      { name: 'Stacco rumeno', tip: 'Gambe quasi tese: fai scorrere il bilanciere lungo le gambe piegando l\'anca, schiena dritta.', mw: 'barbell-romanian-deadlift' },
+      { name: 'Leg curl', tip: 'Sdraiato o seduto sulla macchina: piega le ginocchia portando i talloni verso i glutei.', mw: 'machine-hamstring-curl' },
+      { name: 'Hip thrust', tip: 'Schiena appoggiata a una panca: spingi il bacino verso l\'alto contraendo i glutei.', mw: 'barbell-hip-thrust' },
+      { name: 'Good morning', tip: 'Bilanciere sulle spalle: piega il busto in avanti mantenendo la schiena dritta e le ginocchia morbide.', mw: 'barbell-low-bar-good-morning' },
+      { name: 'Ponte glutei', tip: 'Sdraiato a terra, ginocchia piegate: solleva il bacino contraendo i glutei.', mw: 'dumbbell-glute-bridge' },
     ],
     calves: [
-      { name: 'Calf raise in piedi', tip: 'In piedi: solleva i talloni il più possibile e scendi controllando il movimento.' },
-      { name: 'Calf raise seduto', tip: 'Seduto con il carico sulle ginocchia: solleva i talloni sollevando l\'avampiede.' },
-      { name: 'Calf su leg press', tip: 'Piedi sul bordo della pedana della leg press: spingi con gli avampiedi estendendo le caviglie.' },
+      { name: 'Calf raise in piedi', tip: 'In piedi: solleva i talloni il più possibile e scendi controllando il movimento.', mw: 'standing-calf-raise' },
+      { name: 'Calf raise seduto', tip: 'Seduto con il carico sulle ginocchia: solleva i talloni sollevando l\'avampiede.', mw: 'machine-seated-calf-raises' },
+      { name: 'Calf su leg press', tip: 'Piedi sul bordo della pedana della leg press: spingi con gli avampiedi estendendo le caviglie.', mw: 'machine-horizontal-leg-press-calf-raise' },
     ],
     abs: [
-      { name: 'Crunch', tip: 'Sdraiato, ginocchia piegate: solleva le spalle da terra contraendo l\'addome.' },
-      { name: 'Plank', tip: 'Appoggiato su avambracci e punte dei piedi: mantieni il corpo dritto e l\'addome contratto.' },
-      { name: 'Sit-up', tip: 'Sdraiato, ginocchia piegate: solleva l\'intero busto fino a sedersi.' },
-      { name: 'Leg raise', tip: 'Sdraiato: solleva le gambe tese fino a 90° mantenendo la zona lombare a contatto col pavimento.' },
-      { name: 'Russian twist', tip: 'Seduto con busto inclinato indietro: ruota il busto da un lato all\'altro.' },
+      { name: 'Crunch', tip: 'Sdraiato, ginocchia piegate: solleva le spalle da terra contraendo l\'addome.', mw: 'crunches' },
+      { name: 'Plank', tip: 'Appoggiato su avambracci e punte dei piedi: mantieni il corpo dritto e l\'addome contratto.', mw: 'hand-plank' },
+      { name: 'Sit-up', tip: 'Sdraiato, ginocchia piegate: solleva l\'intero busto fino a sedersi.', mw: 'bodyweight-situp' },
+      { name: 'Leg raise', tip: 'Sdraiato: solleva le gambe tese fino a 90° mantenendo la zona lombare a contatto col pavimento.', mw: 'laying-leg-raises' },
+      { name: 'Russian twist', tip: 'Seduto con busto inclinato indietro: ruota il busto da un lato all\'altro.', mw: 'bodyweight-russian-twist' },
     ],
   };
 
@@ -94,7 +94,7 @@
   function freshExercisesFor(groupId) {
     const list = DEFAULT_EXERCISES[groupId];
     if (!list) return [];
-    return list.map(ex => ({ id: uid(), name: ex.name, tip: ex.tip, custom: false }));
+    return list.map(ex => ({ id: uid(), name: ex.name, tip: ex.tip, mw: ex.mw, custom: false }));
   }
 
   function loadState() {
@@ -174,17 +174,15 @@
     return ex ? ex.name : 'Esercizio da definire';
   }
 
-  const TUTORIAL_CHANNEL_HANDLE = 'vladmatvey';
-
-  function youtubeSearchUrl(exerciseName) {
-    return `https://www.youtube.com/@${TUTORIAL_CHANNEL_HANDLE}/search?query=` + encodeURIComponent(exerciseName);
+  function muscleWikiUrl(slug) {
+    return `https://musclewiki.com/it-it/exercise/${slug}?model=m`;
   }
 
-  function tutorialLinkHtml(exerciseName, withLabel) {
-    if (!exerciseName) return '';
-    const url = youtubeSearchUrl(exerciseName);
-    const label = withLabel ? '<span>Guarda tutorial</span>' : '';
-    return `<a class="tutorial-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Cerca un tutorial video per ${escapeHtml(exerciseName)} sul canale Vlad Matvey">
+  function tutorialLinkHtml(exerciseName, mwSlug, withLabel) {
+    if (!mwSlug) return '';
+    const url = muscleWikiUrl(mwSlug);
+    const label = withLabel ? '<span>Guarda su MuscleWiki</span>' : '';
+    return `<a class="tutorial-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Vedi la scheda di ${escapeHtml(exerciseName || 'questo esercizio')} su MuscleWiki">
       <svg class="icon" viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>${label}
     </a>`;
   }
@@ -382,7 +380,7 @@
         <div class="plan-card-top">
           <div class="plan-card-title">
             <h2>${escapeHtml(g.name)}</h2>
-            <p class="subtitle exercise-name-row">${escapeHtml(exObj ? exObj.name : 'Esercizio da definire')} ${tutorialLinkHtml(exObj && exObj.name)}</p>
+            <p class="subtitle exercise-name-row">${escapeHtml(exObj ? exObj.name : 'Esercizio da definire')} ${tutorialLinkHtml(exObj && exObj.name, exObj && exObj.mw)}</p>
           </div>
           <span class="plan-badge">${planBadgeLabel(plan)}</span>
         </div>
@@ -515,15 +513,17 @@
     const s = state.activeSession;
     if (!s) return;
 
-    let muscleName, exerciseName, exerciseTip;
+    let muscleName, exerciseName, exerciseTip, exerciseMw;
     if (s.freemode) {
       muscleName = 'Modalità libera';
       exerciseName = s.freemode.label || 'Esercizio libero';
       exerciseTip = null;
+      exerciseMw = null;
     } else if (s.custom) {
       muscleName = 'Cronometro personalizzato';
       exerciseName = s.custom.label || 'Esercizio libero';
       exerciseTip = null;
+      exerciseMw = null;
     } else {
       const group = state.groups.find(g => g.id === s.groupId);
       if (!group) { state.activeSession = null; saveState(); goDashboard(); return; }
@@ -531,10 +531,11 @@
       muscleName = group.name;
       exerciseName = exObj ? exObj.name : 'Esercizio da definire';
       exerciseTip = exObj ? exObj.tip : null;
+      exerciseMw = exObj ? exObj.mw : null;
     }
 
     $('#workout-muscle-name').textContent = muscleName;
-    $('#workout-exercise-name').innerHTML = `${escapeHtml(exerciseName)} ${tutorialLinkHtml(exerciseName)}`;
+    $('#workout-exercise-name').innerHTML = `${escapeHtml(exerciseName)} ${tutorialLinkHtml(exerciseName, exerciseMw)}`;
     const tipEl = $('#workout-exercise-tip');
     if (exerciseTip) {
       tipEl.textContent = exerciseTip;
@@ -843,7 +844,7 @@
               ${ex.tip ? `<p class="exercise-item-tip">${escapeHtml(ex.tip)}</p>` : ''}
             </div>
             <div class="exercise-item-actions">
-              ${tutorialLinkHtml(ex.name, true)}
+              ${tutorialLinkHtml(ex.name, ex.mw, true)}
             </div>
           </div>
         `).join('');
@@ -883,7 +884,7 @@
                 ${ex.tip ? `<p class="exercise-item-tip">${escapeHtml(ex.tip)}</p>` : ''}
               </div>
               <div class="exercise-item-actions">
-                ${tutorialLinkHtml(ex.name, true)}
+                ${tutorialLinkHtml(ex.name, ex.mw, true)}
                 <button type="button" class="icon-btn icon-btn-danger" data-action="remove-exercise" aria-label="Rimuovi esercizio">
                   <svg class="icon" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
@@ -965,7 +966,7 @@
               <div class="day-group-row">
                 <div class="day-group-info">
                   <div class="muscle">${escapeHtml(g.name)}</div>
-                  <div class="exercise exercise-name-row">${escapeHtml(exObj ? exObj.name : 'Esercizio da definire')} ${tutorialLinkHtml(exObj && exObj.name)}</div>
+                  <div class="exercise exercise-name-row">${escapeHtml(exObj ? exObj.name : 'Esercizio da definire')} ${tutorialLinkHtml(exObj && exObj.name, exObj && exObj.mw)}</div>
                 </div>
                 <button type="button" class="btn btn-secondary btn-sm" data-start="${g.id}">Inizia</button>
               </div>
