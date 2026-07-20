@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
 
@@ -70,6 +70,17 @@
       <div class="freemode-card-text">
         <div class="freemode-card-title">Cronometro personalizzato</div>
         <div class="freemode-card-subtitle">Scegli tu serie, ripetizioni e pausa — nessuno schema, solo il timer</div>
+      </div>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+
+    <button type="button" id="btn-open-plank" class="freemode-card freemode-card-plank">
+      <div class="freemode-card-icon freemode-card-icon-plank">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 18v-3a2 2 0 012-2h12a2 2 0 012 2v3M4 18h16M4 18v2M20 18v2"/></svg>
+      </div>
+      <div class="freemode-card-text">
+        <div class="freemode-card-title">Plank</div>
+        <div class="freemode-card-subtitle">Timer a tempo libero per il plank, con spiegazione dell'esecuzione corretta</div>
       </div>
       <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
     </button>
@@ -137,6 +148,68 @@
       </label>
       <button type="submit" class="btn btn-primary btn-block btn-lg">Avvia cronometro</button>
     </form>
+  </section>
+
+  <!-- PLANK -->
+  <section id="view-plank" class="view">
+    <header class="workout-header">
+      <button type="button" id="btn-plank-back" class="icon-btn" aria-label="Torna indietro">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="workout-title">
+        <h2>Plank</h2>
+        <p class="subtitle">Timer a tempo libero per la tenuta isometrica</p>
+      </div>
+      <div class="workout-header-spacer"></div>
+    </header>
+
+    <div class="how-to-card">
+      <div class="how-to-head">
+        <h3>Come si esegue</h3>
+        <a class="tutorial-link" href="https://www.youtube.com/@vladmatvey/search?query=Plank" target="_blank" rel="noopener noreferrer" aria-label="Guarda un tutorial video per il Plank sul canale Vlad Matvey">
+          <svg class="icon" viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg><span>Guarda tutorial</span>
+        </a>
+      </div>
+      <ol class="how-to-list">
+        <li>Appoggiati a terra su avambracci e punte dei piedi, gomiti allineati sotto le spalle.</li>
+        <li>Tieni il corpo in linea retta dalla testa ai talloni: bacino né troppo alto né troppo basso.</li>
+        <li>Contrai addominali e glutei per stabilizzare la posizione.</li>
+        <li>Sguardo verso il pavimento, collo rilassato e in linea con la schiena.</li>
+        <li>Respira normalmente per tutta la durata, senza trattenere il fiato.</li>
+      </ol>
+    </div>
+
+    <div id="plank-setup" class="stack">
+      <label class="field">
+        <span>Durata (secondi)</span>
+        <input type="number" id="plank-duration" class="input" min="5" max="900" placeholder="es. 60">
+      </label>
+      <button type="button" id="btn-plank-start" class="btn btn-primary btn-block btn-lg">Avvia timer</button>
+    </div>
+
+    <div id="plank-running" class="workout-body hidden">
+      <div class="timer-ring-wrap">
+        <svg class="timer-ring" viewBox="0 0 200 200">
+          <circle class="timer-ring-bg" cx="100" cy="100" r="90"></circle>
+          <circle id="plank-ring-fg" class="timer-ring-fg" cx="100" cy="100" r="90"></circle>
+        </svg>
+        <div class="timer-ring-center">
+          <div id="plank-state-label" class="timer-state-label">PLANK</div>
+          <div id="plank-main-value" class="timer-main-value">60</div>
+          <div class="timer-sub-label">secondi</div>
+        </div>
+      </div>
+      <button type="button" id="btn-plank-toggle" class="btn btn-primary btn-block btn-xl">Pausa</button>
+      <button type="button" id="btn-plank-reset" class="btn btn-ghost btn-block">Annulla</button>
+    </div>
+
+    <div id="plank-done" class="complete-wrap hidden">
+      <svg class="icon icon-xl icon-accent" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+      <h1>Plank completato!</h1>
+      <p id="plank-done-summary" class="subtitle">Hai tenuto la posizione per 60 secondi.</p>
+      <button type="button" id="btn-plank-again" class="btn btn-primary btn-block btn-lg">Rifai</button>
+      <button type="button" id="btn-plank-done-back" class="btn btn-ghost btn-block">Torna al piano</button>
+    </div>
   </section>
 
   <!-- WEEKLY SCHEDULE -->
@@ -289,6 +362,6 @@
   </div>
 </template>
 
-<script src="js/app.js?v=5"></script>
+<script src="js/app.js?v=6"></script>
 </body>
 </html>

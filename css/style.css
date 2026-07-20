@@ -13,6 +13,7 @@
   --color-muted-foreground: #9AA5B1;
   --color-border: #374151;
   --color-destructive: #EF4444;
+  --color-info: #38BDF8;
   --color-ring: #F97316;
 
   --font-heading: 'Barlow Condensed', sans-serif;
@@ -286,6 +287,44 @@ p { margin: 0; }
   border-color: var(--color-accent);
 }
 .freemode-card-icon-alt { background: var(--color-accent); color: var(--color-on-primary); }
+
+.freemode-card-plank {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(56, 189, 248, 0.04));
+  border-color: var(--color-info);
+}
+.freemode-card-icon-plank { background: var(--color-info); color: var(--color-on-primary); }
+
+/* How-to card (Plank instructions) */
+.how-to-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.how-to-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.how-to-head h3 { font-size: 18px; margin-bottom: 0; }
+.how-to-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--color-muted-foreground);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.how-to-list li::marker {
+  color: var(--color-info);
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
 
 /* Dashboard cards */
 .card-list { display: flex; flex-direction: column; gap: var(--space-4); }

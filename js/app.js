@@ -191,7 +191,7 @@
 
   // ---------- Navigation ----------
 
-  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings', 'freemode', 'timer'];
+  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings', 'freemode', 'timer', 'plank'];
   const NAV_VIEWS = ['dashboard', 'week', 'exercises', 'history', 'settings'];
 
   function showView(name) {
@@ -709,6 +709,96 @@
   }
 
   $('#btn-complete-done').addEventListener('click', goDashboard);
+
+  // ---------- Plank timer ----------
+
+  let plank = null; // { duration, endsAt, remaining, paused }
+  let plankIntervalHandle = null;
+
+  function goPlank() {
+    stopPlankInterval();
+    plank = null;
+    $('#plank-duration').value = '';
+    $('#plank-setup').classList.remove('hidden');
+    $('#plank-running').classList.add('hidden');
+    $('#plank-done').classList.add('hidden');
+    showView('plank');
+  }
+
+  $('#btn-open-plank').addEventListener('click', goPlank);
+  $('#btn-plank-back').addEventListener('click', () => { stopPlankInterval(); goDashboard(); });
+
+  $('#btn-plank-start').addEventListener('click', () => {
+    const duration = Number($('#plank-duration').value);
+    if (!(duration > 0)) return;
+    startPlank(duration);
+  });
+
+  function startPlank(duration) {
+    plank = { duration, remaining: duration, endsAt: Date.now() + duration * 1000, paused: false };
+    $('#plank-setup').classList.add('hidden');
+    $('#plank-done').classList.add('hidden');
+    $('#plank-running').classList.remove('hidden');
+    $('#btn-plank-toggle').textContent = 'Pausa';
+    renderPlank();
+    stopPlankInterval();
+    plankIntervalHandle = setInterval(plankTick, 250);
+  }
+
+  function plankTick() {
+    if (!plank || plank.paused) return;
+    const remaining = Math.max(0, Math.ceil((plank.endsAt - Date.now()) / 1000));
+    plank.remaining = remaining;
+    if (remaining <= 0) {
+      stopPlankInterval();
+      notifyRestOver();
+      $('#plank-running').classList.add('hidden');
+      $('#plank-done').classList.remove('hidden');
+      $('#plank-done-summary').textContent = `Hai tenuto la posizione per ${plank.duration} secondi.`;
+      return;
+    }
+    renderPlank();
+  }
+
+  function renderPlank() {
+    if (!plank) return;
+    const frac = Math.max(0, Math.min(1, plank.remaining / plank.duration));
+    $('#plank-ring-fg').style.stroke = 'var(--color-info)';
+    $('#plank-ring-fg').style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - frac));
+    $('#plank-state-label').textContent = plank.paused ? 'IN PAUSA' : 'PLANK';
+    $('#plank-main-value').textContent = plank.remaining;
+  }
+
+  function stopPlankInterval() {
+    if (plankIntervalHandle) { clearInterval(plankIntervalHandle); plankIntervalHandle = null; }
+  }
+
+  $('#btn-plank-toggle').addEventListener('click', () => {
+    if (!plank) return;
+    if (plank.paused) {
+      plank.endsAt = Date.now() + plank.remaining * 1000;
+      plank.paused = false;
+      $('#btn-plank-toggle').textContent = 'Pausa';
+    } else {
+      plank.paused = true;
+      $('#btn-plank-toggle').textContent = 'Riprendi';
+    }
+    renderPlank();
+  });
+
+  $('#btn-plank-reset').addEventListener('click', () => {
+    stopPlankInterval();
+    plank = null;
+    $('#plank-running').classList.add('hidden');
+    $('#plank-setup').classList.remove('hidden');
+  });
+
+  $('#btn-plank-again').addEventListener('click', () => {
+    if (!plank) return;
+    startPlank(plank.duration);
+  });
+
+  $('#btn-plank-done-back').addEventListener('click', goDashboard);
 
   // ---------- Exercises library ----------
 
