@@ -191,7 +191,7 @@
 
   // ---------- Navigation ----------
 
-  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings', 'freemode', 'timer', 'plank'];
+  const VIEWS = ['onboarding', 'dashboard', 'workout', 'complete', 'week', 'exercises', 'history', 'settings', 'freemode', 'timer', 'plank', 'encyclopedia'];
   const NAV_VIEWS = ['dashboard', 'week', 'exercises', 'history', 'settings'];
 
   function showView(name) {
@@ -799,6 +799,62 @@
   });
 
   $('#btn-plank-done-back').addEventListener('click', goDashboard);
+
+  // ---------- Exercise encyclopedia ----------
+
+  let encyclopediaSelectedGroupId = null;
+
+  function encyclopediaGroups() {
+    const extras = state.groups.filter(g => !DEFAULT_GROUPS.some(d => d.id === g.id));
+    return DEFAULT_GROUPS.concat(extras.map(g => ({ id: g.id, name: g.name })));
+  }
+
+  function encyclopediaExercisesFor(groupId) {
+    return state.exercisesByGroup[groupId] || freshExercisesFor(groupId) || [];
+  }
+
+  function goEncyclopedia() {
+    const groups = encyclopediaGroups();
+    if (!encyclopediaSelectedGroupId || !groups.some(g => g.id === encyclopediaSelectedGroupId)) {
+      encyclopediaSelectedGroupId = groups[0] ? groups[0].id : null;
+    }
+    renderEncyclopedia();
+    showView('encyclopedia');
+  }
+
+  $('#btn-open-encyclopedia').addEventListener('click', goEncyclopedia);
+  $('#btn-encyclopedia-back').addEventListener('click', goDashboard);
+
+  function renderEncyclopedia() {
+    const groups = encyclopediaGroups();
+    const chipRow = $('#encyclopedia-groups');
+    chipRow.innerHTML = groups.map(g => `
+      <button type="button" class="muscle-chip ${g.id === encyclopediaSelectedGroupId ? 'active' : ''}" data-group-id="${g.id}">${escapeHtml(g.name)}</button>
+    `).join('');
+
+    const list = $('#encyclopedia-list');
+    const exercises = encyclopediaExercisesFor(encyclopediaSelectedGroupId);
+    list.innerHTML = exercises.length === 0
+      ? '<div class="empty-state"><p>Nessun esercizio disponibile per questo gruppo.</p></div>'
+      : exercises.map(ex => `
+          <div class="exercise-item">
+            <div class="exercise-item-main">
+              <div class="exercise-item-name">${escapeHtml(ex.name)}</div>
+              ${ex.tip ? `<p class="exercise-item-tip">${escapeHtml(ex.tip)}</p>` : ''}
+            </div>
+            <div class="exercise-item-actions">
+              ${tutorialLinkHtml(ex.name, true)}
+            </div>
+          </div>
+        `).join('');
+  }
+
+  $('#encyclopedia-groups').addEventListener('click', e => {
+    const chip = e.target.closest('[data-group-id]');
+    if (!chip) return;
+    encyclopediaSelectedGroupId = chip.dataset.groupId;
+    renderEncyclopedia();
+  });
 
   // ---------- Exercises library ----------
 

@@ -12,7 +12,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css?v=6">
+<link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -81,6 +81,17 @@
       <div class="freemode-card-text">
         <div class="freemode-card-title">Plank</div>
         <div class="freemode-card-subtitle">Timer a tempo libero per il plank, con spiegazione dell'esecuzione corretta</div>
+      </div>
+      <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+
+    <button type="button" id="btn-open-encyclopedia" class="freemode-card freemode-card-encyclopedia">
+      <div class="freemode-card-icon freemode-card-icon-encyclopedia">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V2H6.5A2.5 2.5 0 004 4.5v15z"/></svg>
+      </div>
+      <div class="freemode-card-text">
+        <div class="freemode-card-title">Enciclopedia esercizi</div>
+        <div class="freemode-card-subtitle">Scegli un gruppo muscolare e scopri come eseguire ogni esercizio</div>
       </div>
       <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
     </button>
@@ -210,6 +221,23 @@
       <button type="button" id="btn-plank-again" class="btn btn-primary btn-block btn-lg">Rifai</button>
       <button type="button" id="btn-plank-done-back" class="btn btn-ghost btn-block">Torna al piano</button>
     </div>
+  </section>
+
+  <!-- EXERCISE ENCYCLOPEDIA -->
+  <section id="view-encyclopedia" class="view">
+    <header class="workout-header">
+      <button type="button" id="btn-encyclopedia-back" class="icon-btn" aria-label="Torna indietro">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="workout-title">
+        <h2>Enciclopedia esercizi</h2>
+        <p class="subtitle">Scegli un gruppo muscolare per vedere come si eseguono gli esercizi</p>
+      </div>
+      <div class="workout-header-spacer"></div>
+    </header>
+
+    <div id="encyclopedia-groups" class="muscle-chip-row"></div>
+    <div id="encyclopedia-list" class="stack"></div>
   </section>
 
   <!-- WEEKLY SCHEDULE -->
@@ -362,6 +390,6 @@
   </div>
 </template>
 
-<script src="js/app.js?v=6"></script>
+<script src="js/app.js?v=7"></script>
 </body>
 </html>
